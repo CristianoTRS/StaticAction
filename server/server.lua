@@ -1,7 +1,3 @@
-ESX = nil
-
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-
 RegisterNetEvent('staticAction:server:actionCommand')
 AddEventHandler('staticAction:server:actionCommand', function(coords, args, name)
     TriggerClientEvent('staticAction:client:actionCommand', -1, coords, args, name)
