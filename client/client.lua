@@ -1,13 +1,12 @@
-ESX = nil
-
-Citizen.CreateThread(function()
-    while ESX == nil do
-        Citizen.Wait(0)
-        TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-    end
-end)
-
 local actions = {}
+
+function chatMessage(prefix, message)
+    TriggerEvent('chat:addMessage', {
+      color = { 255, 0, 0},
+      multiline = true,
+      args = {prefix, message}
+    })
+end
 
 function Draw3DText(x, y, z, text, color)
 
@@ -77,10 +76,10 @@ RegisterCommand('raction', function(source, args, rawCommand)
         if closestAction[2].pid == playerPed then
             TriggerServerEvent('staticAction:server:ractionCommand', closestAction[1])
         else
-            ESX.ShowNotification('~r~This action doesn\'t belong to you!')
+            chatMessage('Error', '~r~This action doesn\'t belong to you!')
         end
     else
-        ESX.ShowNotification('~r~No action found.')
+        chatMessage('Error', '~r~No action found.')
     end
 end)
 
@@ -91,7 +90,7 @@ AddEventHandler('staticAction:client:actionCommand', function(coords, args, pid)
     local data = { pid = pid, x = coords.x, y = coords.y, z = coords.z, action = msg, color = { r = 0, g = 255, b = 0, a = 255 }, time = 30 }
 
     if msg == '' then
-        ESX.ShowNotification('~r~Invalid Action!')
+        chatMessage('Error', '~r~Invalid Action!')
     else
         table.insert(actions, data)
     end
