@@ -98,7 +98,7 @@ end)
 
 RegisterNetEvent('staticAction:client:ractionCommand')
 AddEventHandler('staticAction:client:ractionCommand', function(action)
-    table.remove(actions, action)
+    actions[action] = nil
 end)
 
 Citizen.CreateThread(function()
